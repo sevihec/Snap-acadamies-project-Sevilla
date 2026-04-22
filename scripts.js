@@ -1,97 +1,94 @@
-/**
- * Data Catalog Project Starter Code - SEA Stage 2
- *
- * This file is where you should be doing most of your work. You should
- * also make changes to the HTML and CSS files, but we want you to prioritize
- * demonstrating your understanding of data structures, and you'll do that
- * with the JavaScript code you write in this file.
- *
- * The comments in this file are only to help you learn how the starter code
- * works. The instructions for the project are in the README. That said, here
- * are the three things you should do first to learn about the starter code:
- * - 1 - Change something small in index.html or style.css, then reload your
- *    browser and make sure you can see that change.
- * - 2 - On your browser, right click anywhere on the page and select
- *    "Inspect" to open the browser developer tools. Then, go to the "console"
- *    tab in the new window that opened up. This console is where you will see
- *    JavaScript errors and logs, which is extremely helpful for debugging.
- *    (These instructions assume you're using Chrome, opening developer tools
- *    may be different on other browsers. We suggest using Chrome.)
- * - 3 - Add another string to the titles array a few lines down. Reload your
- *    browser and observe what happens. You should see a fourth "card" appear
- *    with the string you added to the array, but a broken image.
- *
- */
-
-const FRESH_PRINCE_URL =
-  "https://upload.wikimedia.org/wikipedia/en/3/33/Fresh_Prince_S1_DVD.jpg";
-const CURB_POSTER_URL =
-  "https://m.media-amazon.com/images/M/MV5BZDY1ZGM4OGItMWMyNS00MDAyLWE2Y2MtZTFhMTU0MGI5ZDFlXkEyXkFqcGdeQXVyMDc5ODIzMw@@._V1_FMjpg_UX1000_.jpg";
-const EAST_LOS_HIGH_POSTER_URL =
-  "https://static.wikia.nocookie.net/hulu/images/6/64/East_Los_High.jpg";
-
-// This is an array of strings (TV show titles)
-let titles = [
-  "Fresh Prince of Bel Air",
-  "Curb Your Enthusiasm",
-  "East Los High",
+// This stores the product list for the page.
+var products = [
+  // This is the first product object.
+  { name: "Classic White Gi", price: "$79", category: "Gi", image: "images/White-gi.png" },
+  // This is the second product object.
+  { name: "Blue Training Gi", price: "$85", category: "Gi", image: "images/blue-training-gi.png" },
+  // This is the third product object.
+  { name: "Black No-Gi Rash Guard", price: "$42", category: "No-Gi", image: "images/black-nogi-rashguard.png" },
+  // This is the fourth product object.
+  { name: "Red Grappling Shorts", price: "$38", category: "No-Gi", image: "images/red-grappling-shorts.png" },
+  // This is the fifth product object.
+  { name: "Bolo Sport Belt", price: "$18", category: "Accessories", image: "images/bolo-sport-belt.png" },
+  // This is the sixth product object.
+  { name: "Gym Backpack", price: "$44", category: "Accessories", image: "images/gym-backpack.png" },
+  // This is the seventh product object.
+  { name: "Competition Gi", price: "$99", category: "Gi", image: "images/competition-gi.png" },
+  // This is the eighth product object.
+  { name: "No-Gi Leggings", price: "$35", category: "No-Gi", image: "images/nogi-leggings.png" },
+  // This is the ninth product object.
+  { name: "Water Bottle", price: "$12", category: "Accessories", image: "images/water-bottle.png" }
 ];
-// Your final submission should have much more data than this, and
-// you should use more than just an array of strings to store it all.
-
-// This function adds cards the page to display the data in the array
+// This keeps track of which category is being shown.
+var currentCategory = "All";
+// This shows the cards when the page finishes loading.
+document.addEventListener("DOMContentLoaded", showCards);
+// This function shows product cards on the page.
 function showCards() {
-  const cardContainer = document.getElementById("card-container");
+  // This gets the place where cards go.
+  var cardContainer = document.getElementById("card-container");
+  // This clears out the old cards first.
   cardContainer.innerHTML = "";
-  const templateCard = document.querySelector(".card");
-
-  for (let i = 0; i < titles.length; i++) {
-    let title = titles[i];
-
-    // This part of the code doesn't scale very well! After you add your
-    // own data, you'll need to do something totally different here.
-    let imageURL = "";
-    if (i == 0) {
-      imageURL = FRESH_PRINCE_URL;
-    } else if (i == 1) {
-      imageURL = CURB_POSTER_URL;
-    } else if (i == 2) {
-      imageURL = EAST_LOS_HIGH_POSTER_URL;
+  // This finds the hidden sample card.
+  var templateCard = document.querySelector(".card");
+  // This starts a loop for every product.
+  for (var i = 0; i < products.length; i++) {
+    // This gets one product from the array.
+    var product = products[i];
+    // This checks if all products should be shown.
+    if (currentCategory === "All") {
+      // This makes a copy of the sample card.
+      var nextCard = templateCard.cloneNode(true);
+      // This fills the copied card with product info.
+      editCardContent(nextCard, product);
+      // This adds the new card to the page.
+      cardContainer.appendChild(nextCard);
+    // This checks if the product matches the chosen category.
+    } else if (product.category === currentCategory) {
+      // This makes a copy of the sample card.
+      var nextCard = templateCard.cloneNode(true);
+      // This fills the copied card with product info.
+      editCardContent(nextCard, product);
+      // This adds the new card to the page.
+      cardContainer.appendChild(nextCard);
     }
-
-    const nextCard = templateCard.cloneNode(true); // Copy the template card
-    editCardContent(nextCard, title, imageURL); // Edit title and image
-    cardContainer.appendChild(nextCard); // Add new card to the container
   }
 }
-
-function editCardContent(card, newTitle, newImageURL) {
+// This function changes the copied card content.
+function editCardContent(card, product) {
+  // This makes the copied card visible.
   card.style.display = "block";
-
-  const cardHeader = card.querySelector("h2");
-  cardHeader.textContent = newTitle;
-
-  const cardImage = card.querySelector("img");
-  cardImage.src = newImageURL;
-  cardImage.alt = newTitle + " Poster";
-
-  // You can use console.log to help you debug!
-  // View the output by right clicking on your website,
-  // select "Inspect", then click on the "Console" tab
-  console.log("new card:", newTitle, "- html: ", card);
+  // This finds the title area inside the card.
+  var cardHeader = card.querySelector("h2");
+  // This puts the product name in the title.
+  cardHeader.textContent = product.name;
+  // This finds the image inside the card.
+  var cardImage = card.querySelector("img");
+  // This sets the image source.
+  cardImage.src = product.image;
+  // This finds all list items in the card.
+  var cardListItems = card.querySelectorAll("li");
+  // This puts the price in the first list item.
+  cardListItems[0].textContent = "Price: " + product.price;
+  // This puts the category in the second list item.
+  cardListItems[1].textContent = "Category: " + product.category;
 }
-
-// This calls the addCards() function when the page is first loaded
-document.addEventListener("DOMContentLoaded", showCards);
-
+// This function changes the chosen category.
+function filterProducts(categoryName) {
+  // This saves the new category choice.
+  currentCategory = categoryName;
+  // This shows the cards again with the new filter.
+  showCards();
+}
+// This function shows a simple message.
 function quoteAlert() {
-  console.log("Button Clicked!");
-  alert(
-    "I guess I can kiss heaven goodbye, because it got to be a sin to look this good!",
-  );
+  // This shows an alert box on the page.
+  alert("Bolo Sport has simple gear for gi, no-gi, and training accessories.");
 }
-
+// This function removes the last product.
 function removeLastCard() {
-  titles.pop(); // Remove last item in titles array
-  showCards(); // Call showCards again to refresh
+  // This removes the last product from the array.
+  products.pop();
+  // This shows the cards again after removing one.
+  showCards();
 }
