@@ -1,31 +1,44 @@
 <!doctype html>
 <html>
+  <!-- head section -->
   <head>
-    <title>LA TV Shows | Home</title>
-    <meta name="description" content="A Catalog of Shows Set in Los Angeles" />
+    <title>Bolo Sport</title>
+    <meta name="description" content="A simple Bolo Sport product catalog" />
     <link rel="stylesheet" href="style.css" />
     <script type="text/javascript" src="scripts.js"></script>
   </head>
 
   <body>
+    <!-- page header -->
     <header class="main-header">
-      <h1 class="title">LA TV Shows</h1>
+      <h1 class="title">Bolo Sport</h1>
     </header>
+
+    <!-- filter buttons -->
+    <div class="filter-area">
+      <button onclick="filterProducts('All')">All</button>
+      <button onclick="filterProducts('Gi')">Gi</button>
+      <button onclick="filterProducts('No-Gi')">No-Gi</button>
+      <button onclick="filterProducts('Accessories')">Accessories</button>
+    </div>
+
+    <!-- card container and template -->
     <div id="card-container"></div>
     <div class="card" style="display: none">
       <div class="card-content">
-        <h2>TV Show Title</h2>
-        <img src="" alt="TV Show Poster" />
+        <h2>Product Name</h2>
+        <img src="" alt="Product Image" />
         <ul>
-          <li>Bullet Point 1</li>
-          <li>Bullet Point 2</li>
-          <li>Bullet Point 3</li>
+          <li>Price</li>
+          <li>Category</li>
         </ul>
       </div>
     </div>
+
+    <!-- footer buttons -->
     <div class="footer">
-      <button onclick="quoteAlert()">Get A Quote!</button>
-      <button onclick="removeLastCard()">Remove A Card!</button>
+      <button onclick="quoteAlert()">About Bolo Sport</button>
+      <button onclick="removeLastCard()">Remove Last Product</button>
     </div>
   </body>
 </html>
